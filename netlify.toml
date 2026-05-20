@@ -1,0 +1,10 @@
+[build]
+  command = "npm run build"
+  publish = "dist"
+
+# SPA fallback: every route returns index.html so React Router can resolve client-side.
+# Excludes static assets and the PWA service worker / manifest, which must serve as-is.
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200

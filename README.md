@@ -47,6 +47,16 @@ See `docs/app.md` and `docs/fifa.md` for the original spec. See `CLAUDE.md` for 
 
 ## Deploying
 
+### Option A — Netlify (auto-deploy on push)
+
+1. New site → "Import from Git" → pick this repo. Netlify reads `netlify.toml` for build command (`npm run build`) and publish dir (`dist`).
+2. Site settings → Environment variables → add the six `VITE_FIREBASE_*` values and `VITE_ADMIN_PIN` (same values as your local `.env.local`). Vite inlines these at build time, so the deploy will fail / be broken without them.
+3. Trigger a deploy. Every push to `main` redeploys automatically.
+
+The SPA redirect in `netlify.toml` is what makes deep links like `/events` work on reload.
+
+### Option B — Firebase Hosting
+
 ```sh
 npm install -g firebase-tools     # once
 firebase login                    # once
