@@ -75,6 +75,10 @@ export async function setFrisbeegolf(state: TeamEvent): Promise<void> {
   await updateDoc(competitionRef(), { 'events.frisbeegolf': state });
 }
 
+export async function setAarticulate(state: TeamEvent): Promise<void> {
+  await updateDoc(competitionRef(), { 'events.aarticulate': state });
+}
+
 export async function setFifaFixtures(fixtures: FifaFixture[]): Promise<void> {
   await updateDoc(competitionRef(), { 'events.fifa.fixtures': fixtures });
 }

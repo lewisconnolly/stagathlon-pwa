@@ -1,0 +1,31 @@
+{
+    "cards": [
+        {
+            "id": "1",
+            "person": "Neo",
+            "world": "Glasgow",
+            "object": "Basketball",
+            "action": "Wanking",
+            "nature": "Greyhound",
+            "random": "Insurance"
+        },
+        {
+            "id": "2",
+            "person": "Confident Jonathon",
+            "world": "Paris",
+            "object": "Ultrawide Monitor",
+            "action": "Farting",
+            "nature": "Four Leaf Clover",
+            "random": "Europa Universalis"
+        },
+        {
+            "id": "3",
+            "person": "Luka Doncic",
+            "world": "Airth",
+            "object": "Buttplug",
+            "action": "Procrastinating",
+            "nature": "Potato Plant",
+            "random": "Cider"
+        }
+    ]
+}

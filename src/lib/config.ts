@@ -41,7 +41,7 @@ export const EVENTS: EventConfig[] = [
   },
   {
     id: 'footgolf',
-    label: 'Footgolf',
+    label: 'FootGolf',
     icon: '⚽',
     status: 'live',
     instructions: [
@@ -52,7 +52,7 @@ export const EVENTS: EventConfig[] = [
   },
   {
     id: 'frisbeegolf',
-    label: 'Frisbeegolf',
+    label: 'FrisbeeGolf',
     icon: '🥏',
     status: 'live',
     instructions: [
@@ -61,7 +61,18 @@ export const EVENTS: EventConfig[] = [
       'Runner-up = 1 pt to each member'
     ]
   },
-  { id: 'aarticulate', label: 'Aarticulate', icon: '🗣️', status: 'placeholder', instructions: ['Coming soon.'] },
+  {
+    id: 'aarticulate',
+    label: 'Aarticulate!',
+    icon: '🗣️',
+    status: 'live',
+    instructions: [
+      'Three teams — 3 vs 2 vs 2',
+      'Winner = 2 pts to each member',
+      'Runner-up = 1 pt to each member',
+      'Describer takes a shot when their time is up'
+    ]
+  },
   { id: 'challenges', label: 'Challenges', icon: '❓', status: 'placeholder', instructions: ['Coming soon.'] }
 ];
 

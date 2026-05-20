@@ -1,4 +1,4 @@
-import { useMemo } from 'react';
+import { useMemo, type ReactNode } from 'react';
 import { useCompetition } from '../../lib/competition';
 import { ensureTeamEventShape, teamContributions } from '../../lib/derive';
 import { setStanding, setTeamMember, setTeamName } from '../../lib/team-mutations';
@@ -10,9 +10,10 @@ import type { AthleteId, TeamEvent, TeamIndex, TeamStandings } from '../../types
 interface Props {
   rawEvent: unknown;
   save: (state: TeamEvent) => Promise<void>;
+  extraSection?: ReactNode;
 }
 
-export function TeamEventPage({ rawEvent, save }: Props) {
+export function TeamEventPage({ rawEvent, save, extraSection }: Props) {
   const { status, data } = useCompetition();
   const event = useMemo(() => ensureTeamEventShape(rawEvent), [rawEvent]);
   const contributions = useMemo(
@@ -38,6 +39,7 @@ export function TeamEventPage({ rawEvent, save }: Props) {
   return (
     <div className="space-y-5">
       <LeaderboardPtsTable athletes={data.athletes} contributions={contributions} />
+      {extraSection}
       <Standings event={event} onChange={onStandingChange} />
       <Teams
         event={event}

@@ -81,7 +81,7 @@ export interface CompetitionEvents {
   pool: PoolEvent;
   footgolf: TeamEvent;
   frisbeegolf: TeamEvent;
-  aarticulate: PlaceholderEvent;
+  aarticulate: TeamEvent;
   challenges: PlaceholderEvent;
 }
 

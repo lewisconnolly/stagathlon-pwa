@@ -75,7 +75,7 @@ async function main() {
       },
       footgolf: emptyTeamEvent(),
       frisbeegolf: emptyTeamEvent(),
-      aarticulate: { placeholder: true },
+      aarticulate: emptyTeamEvent(),
       challenges: { placeholder: true }
     }
   };

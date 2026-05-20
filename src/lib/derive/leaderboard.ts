@@ -17,6 +17,10 @@ export function leaderboard(competition: Competition): LeaderboardRow[] {
     competition.athletes,
     ensureTeamEventShape(competition.events.frisbeegolf)
   );
+  const aarticulatePts = teamPoints(
+    competition.athletes,
+    ensureTeamEventShape(competition.events.aarticulate)
+  );
 
   const rows: LeaderboardRow[] = competition.athletes.map((a) => {
     const perEvent = Object.fromEntries(EVENT_IDS.map((id) => [id, 0])) as Record<EventId, number>;
@@ -24,6 +28,7 @@ export function leaderboard(competition: Competition): LeaderboardRow[] {
     perEvent.pool = poolPts.get(a.id) ?? 0;
     perEvent.footgolf = footgolfPts.get(a.id) ?? 0;
     perEvent.frisbeegolf = frisbeegolfPts.get(a.id) ?? 0;
+    perEvent.aarticulate = aarticulatePts.get(a.id) ?? 0;
     const total = EVENT_IDS.reduce((sum, id) => sum + perEvent[id], 0);
     return { athleteId: a.id, perEvent, total };
   });

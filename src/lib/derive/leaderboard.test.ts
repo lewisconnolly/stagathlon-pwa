@@ -47,7 +47,14 @@ const baseCompetition = (overrides: Partial<Competition['events']['fifa']> = {})
       ],
       standings: { first: null, second: null, third: null }
     },
-    aarticulate: { placeholder: true },
+    aarticulate: {
+      teams: [
+        { name: 'Team 1', members: [null, null, null] },
+        { name: 'Team 2', members: [null, null] },
+        { name: 'Team 3', members: [null, null] }
+      ],
+      standings: { first: null, second: null, third: null }
+    },
     challenges: { placeholder: true }
   }
 });
