@@ -56,13 +56,31 @@ export interface PoolEvent {
   thirdPlaceWinner: Side | null;
 }
 
+export type TeamIndex = 0 | 1 | 2;
+
+export interface TeamConfig {
+  name: string;
+  members: (AthleteId | null)[];
+}
+
+export interface TeamStandings {
+  first: TeamIndex | null;
+  second: TeamIndex | null;
+  third: TeamIndex | null;
+}
+
+export interface TeamEvent {
+  teams: [TeamConfig, TeamConfig, TeamConfig];
+  standings: TeamStandings;
+}
+
 export type EventId = 'fifa' | 'pool' | 'footgolf' | 'frisbeegolf' | 'aarticulate' | 'challenges';
 
 export interface CompetitionEvents {
   fifa: FifaEvent;
   pool: PoolEvent;
-  footgolf: PlaceholderEvent;
-  frisbeegolf: PlaceholderEvent;
+  footgolf: TeamEvent;
+  frisbeegolf: TeamEvent;
   aarticulate: PlaceholderEvent;
   challenges: PlaceholderEvent;
 }

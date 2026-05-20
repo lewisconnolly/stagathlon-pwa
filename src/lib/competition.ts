@@ -1,7 +1,14 @@
 import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { COMPETITION_DOC_PATH, db } from '../firebase';
-import type { Competition, FifaEvent, FifaFixture, FifaKnockoutScore, PoolEvent } from '../types';
+import type {
+  Competition,
+  FifaEvent,
+  FifaFixture,
+  FifaKnockoutScore,
+  PoolEvent,
+  TeamEvent
+} from '../types';
 
 type Status = 'loading' | 'ready' | 'missing' | 'error';
 
@@ -58,6 +65,14 @@ export async function setFifa(state: FifaEvent): Promise<void> {
 
 export async function setPool(state: PoolEvent): Promise<void> {
   await updateDoc(competitionRef(), { 'events.pool': state });
+}
+
+export async function setFootgolf(state: TeamEvent): Promise<void> {
+  await updateDoc(competitionRef(), { 'events.footgolf': state });
+}
+
+export async function setFrisbeegolf(state: TeamEvent): Promise<void> {
+  await updateDoc(competitionRef(), { 'events.frisbeegolf': state });
 }
 
 export async function setFifaFixtures(fixtures: FifaFixture[]): Promise<void> {

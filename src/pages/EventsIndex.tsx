@@ -2,6 +2,8 @@ import { EVENTS, eventById } from '../lib/config';
 import type { EventId } from '../types';
 import { useEventsStore } from '../store/events';
 import { Fifa } from './events/Fifa';
+import { Footgolf } from './events/Footgolf';
+import { Frisbeegolf } from './events/Frisbeegolf';
 import { Pool } from './events/Pool';
 
 export function EventsIndex() {
@@ -40,6 +42,10 @@ export function EventsIndex() {
         <Fifa />
       ) : event.id === 'pool' ? (
         <Pool />
+      ) : event.id === 'footgolf' ? (
+        <Footgolf />
+      ) : event.id === 'frisbeegolf' ? (
+        <Frisbeegolf />
       ) : (
         <section className="rounded-2xl border border-line bg-white p-6 text-center text-sm italic text-sub shadow-sm">
           {event.label} is not yet implemented — coming soon.

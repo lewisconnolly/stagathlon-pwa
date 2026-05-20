@@ -1,7 +1,7 @@
 import { initializeApp } from 'firebase/app';
 import { doc, getDoc, getFirestore, setDoc } from 'firebase/firestore';
 import { LEAGUE_SIZES } from '../src/lib/config';
-import type { Competition, LeagueSlot } from '../src/types';
+import type { Competition, LeagueSlot, TeamEvent } from '../src/types';
 
 const firebaseConfig = {
   apiKey: process.env.VITE_FIREBASE_API_KEY,
@@ -44,6 +44,15 @@ async function main() {
 
   const emptySlots = (count: number): LeagueSlot[] => Array<LeagueSlot>(count).fill(null);
 
+  const emptyTeamEvent = (): TeamEvent => ({
+    teams: [
+      { name: 'Team 1', members: [null, null, null] },
+      { name: 'Team 2', members: [null, null] },
+      { name: 'Team 3', members: [null, null] }
+    ],
+    standings: { first: null, second: null, third: null }
+  });
+
   const initial: Competition = {
     athletes,
     events: {
@@ -64,8 +73,8 @@ async function main() {
         finalWinner: null,
         thirdPlaceWinner: null
       },
-      footgolf: { placeholder: true },
-      frisbeegolf: { placeholder: true },
+      footgolf: emptyTeamEvent(),
+      frisbeegolf: emptyTeamEvent(),
       aarticulate: { placeholder: true },
       challenges: { placeholder: true }
     }

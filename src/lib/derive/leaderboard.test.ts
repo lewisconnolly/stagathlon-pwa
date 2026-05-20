@@ -31,8 +31,22 @@ const baseCompetition = (overrides: Partial<Competition['events']['fifa']> = {})
       finalWinner: null,
       thirdPlaceWinner: null
     },
-    footgolf: { placeholder: true },
-    frisbeegolf: { placeholder: true },
+    footgolf: {
+      teams: [
+        { name: 'Team 1', members: [null, null, null] },
+        { name: 'Team 2', members: [null, null] },
+        { name: 'Team 3', members: [null, null] }
+      ],
+      standings: { first: null, second: null, third: null }
+    },
+    frisbeegolf: {
+      teams: [
+        { name: 'Team 1', members: [null, null, null] },
+        { name: 'Team 2', members: [null, null] },
+        { name: 'Team 3', members: [null, null] }
+      ],
+      standings: { first: null, second: null, third: null }
+    },
     aarticulate: { placeholder: true },
     challenges: { placeholder: true }
   }

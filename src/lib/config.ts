@@ -39,8 +39,28 @@ export const EVENTS: EventConfig[] = [
       '3rd place gets 1 pt'
     ]
   },
-  { id: 'footgolf', label: 'Footgolf', icon: '⚽', status: 'placeholder', instructions: ['Coming soon.'] },
-  { id: 'frisbeegolf', label: 'Frisbeegolf', icon: '🥏', status: 'placeholder', instructions: ['Coming soon.'] },
+  {
+    id: 'footgolf',
+    label: 'Footgolf',
+    icon: '⚽',
+    status: 'live',
+    instructions: [
+      'Three teams — 3 vs 2 vs 2',
+      'Winner = 2 pts to each member',
+      'Runner-up = 1 pt to each member'
+    ]
+  },
+  {
+    id: 'frisbeegolf',
+    label: 'Frisbeegolf',
+    icon: '🥏',
+    status: 'live',
+    instructions: [
+      'Three teams — 3 vs 2 vs 2',
+      'Winner = 2 pts to each member',
+      'Runner-up = 1 pt to each member'
+    ]
+  },
   { id: 'aarticulate', label: 'Aarticulate', icon: '🗣️', status: 'placeholder', instructions: ['Coming soon.'] },
   { id: 'challenges', label: 'Challenges', icon: '❓', status: 'placeholder', instructions: ['Coming soon.'] }
 ];
