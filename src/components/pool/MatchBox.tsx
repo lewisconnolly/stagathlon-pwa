@@ -35,7 +35,7 @@ export function MatchBox({
   };
 
   return (
-    <section className="rounded-xl border border-line bg-white shadow-sm">
+    <section className="min-w-0 rounded-xl border border-line bg-white shadow-sm">
       <header className="border-b border-line px-3 py-1">
         <h4 className="text-xs font-semibold uppercase tracking-wide text-sub">{label}</h4>
       </header>
@@ -86,7 +86,7 @@ function PlayerRow({
   const canMarkWinner = isAdmin && slot.player !== null;
 
   return (
-    <div className={['flex items-center justify-between gap-2', padding].join(' ')}>
+    <div className={['flex min-w-0 items-center justify-between gap-2', padding].join(' ')}>
       <PlayerDisplay
         slot={slot}
         nameOf={nameOf}

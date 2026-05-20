@@ -34,9 +34,9 @@ export function Bracket({ pool, athletes, onQfSlot, onBye, onWinner }: Props) {
         <h3 className="text-center text-sm font-semibold uppercase tracking-wide text-sub">Bracket</h3>
       </header>
 
-      <div className="grid grid-cols-[1fr_1.3fr_1fr] gap-2">
+      <div className="grid grid-cols-3 gap-2">
         {/* Left column: QF1 + QF2 */}
-        <div className="flex flex-col justify-between gap-3">
+        <div className="flex min-w-0 flex-col justify-between gap-3">
           <MatchBox
             label="QF1"
             home={{ player: pool.qf1.home, onChange: (id) => onQfSlot('qf1', 'home', id) }}
@@ -45,6 +45,7 @@ export function Bracket({ pool, athletes, onQfSlot, onBye, onWinner }: Props) {
             athletes={athletes}
             unavailable={unavailable}
             onWinnerChange={(s) => onWinner('qf1', s)}
+            size="compact"
           />
           <MatchBox
             label="QF2"
@@ -54,11 +55,12 @@ export function Bracket({ pool, athletes, onQfSlot, onBye, onWinner }: Props) {
             athletes={athletes}
             unavailable={unavailable}
             onWinnerChange={(s) => onWinner('qf2', s)}
+            size="compact"
           />
         </div>
 
         {/* Middle column: SF1, FINAL, SF2 */}
-        <div className="flex flex-col justify-center gap-2">
+        <div className="flex min-w-0 flex-col justify-center gap-2">
           <MatchBox
             label="SF1"
             home={{ player: m.sf1.home, placeholder: 'QF1 winner' }}
@@ -92,7 +94,7 @@ export function Bracket({ pool, athletes, onQfSlot, onBye, onWinner }: Props) {
         </div>
 
         {/* Right column: QF3 + BYE */}
-        <div className="flex flex-col justify-between gap-3">
+        <div className="flex min-w-0 flex-col justify-between gap-3">
           <MatchBox
             label="QF3"
             home={{ player: pool.qf3.home, onChange: (id) => onQfSlot('qf3', 'home', id) }}
@@ -101,6 +103,7 @@ export function Bracket({ pool, athletes, onQfSlot, onBye, onWinner }: Props) {
             athletes={athletes}
             unavailable={unavailable}
             onWinnerChange={(s) => onWinner('qf3', s)}
+            size="compact"
           />
           <ByeBox
             byePlayer={pool.byePlayer}
@@ -141,17 +144,17 @@ function ByeBox({
   const nameOf = (id: AthleteId) => athletes.find((a) => a.id === id)?.name ?? id;
 
   return (
-    <section className="rounded-xl border border-line bg-white shadow-sm">
+    <section className="min-w-0 rounded-xl border border-line bg-white shadow-sm">
       <header className="border-b border-line px-3 py-1">
         <h4 className="text-xs font-semibold uppercase tracking-wide text-sub">Bye</h4>
       </header>
-      <div className="px-3 py-1.5">
+      <div className="px-2 py-1">
         {isAdmin ? (
           <select
             value={byePlayer ?? ''}
             onChange={(e) => onChange(e.target.value === '' ? null : (e.target.value as AthleteId))}
             className={[
-              'w-full cursor-pointer truncate rounded-md border border-line bg-white px-1.5 py-1 text-sm font-medium shadow-sm focus:border-ink focus:outline-none',
+              'min-w-0 w-full cursor-pointer truncate rounded-md border border-line bg-white px-1.5 py-1 text-xs font-medium shadow-sm focus:border-ink focus:outline-none',
               byePlayer ? '' : 'italic text-slate-400'
             ].join(' ')}
           >
@@ -168,7 +171,7 @@ function ByeBox({
           </select>
         ) : (
           <span
-            className={['truncate text-sm font-medium', byePlayer ? '' : 'italic text-slate-400'].join(' ')}
+            className={['truncate text-xs font-medium', byePlayer ? '' : 'italic text-slate-400'].join(' ')}
           >
             {byePlayer ? nameOf(byePlayer) : '—'}
           </span>
