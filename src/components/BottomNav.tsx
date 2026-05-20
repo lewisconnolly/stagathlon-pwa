@@ -8,7 +8,7 @@ const linkClass = ({ isActive }: { isActive: boolean }) =>
 
 export function BottomNav() {
   return (
-    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto flex max-w-md border-t border-line bg-white/95 backdrop-blur">
+    <nav className="fixed inset-x-0 bottom-0 z-40 mx-auto flex max-w-md overflow-hidden rounded-t-2xl border-x border-t border-line bg-white/95 backdrop-blur">
       <NavLink to="/" end className={linkClass}>
         <span aria-hidden className="text-lg">🏆</span>
         Leaderboard

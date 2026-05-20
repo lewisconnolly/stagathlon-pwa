@@ -1,11 +1,12 @@
-import { useState } from 'react';
 import { EVENTS, eventById } from '../lib/config';
 import type { EventId } from '../types';
+import { useEventsStore } from '../store/events';
 import { Fifa } from './events/Fifa';
 import { Pool } from './events/Pool';
 
 export function EventsIndex() {
-  const [selected, setSelected] = useState<EventId>(EVENTS[0].id);
+  const selected = useEventsStore((s) => s.selected);
+  const setSelected = useEventsStore((s) => s.setSelected);
   const event = eventById(selected)!;
 
   return (
