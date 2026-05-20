@@ -1,0 +1,14 @@
+node_modules/
+dist/
+dist-ssr/
+.env
+.env.local
+.env.*.local
+*.log
+.DS_Store
+.vite/
+coverage/
+.firebase/
+firebase-debug.log
+.playwright-mcp/
+*.tsbuildinfo
