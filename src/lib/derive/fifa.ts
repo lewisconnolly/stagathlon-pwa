@@ -1,11 +1,16 @@
 import type {
   Athlete,
   AthleteId,
+  FifaContribution,
   FifaEvent,
   FifaFixture,
+  FifaKnockoutScore,
   KnockoutPairings,
-  LeagueRow
+  KnockoutSide,
+  LeagueRow,
+  LeagueSlot
 } from '../../types';
+import { pairFixtureId } from '../config';
 
 function isCompleted(f: FifaFixture): f is FifaFixture & { homeGoals: number; awayGoals: number } {
   return Number.isInteger(f.homeGoals) && Number.isInteger(f.awayGoals);
@@ -23,12 +28,18 @@ const blankRow = (athleteId: AthleteId): LeagueRow => ({
   tiebreakNeeded: false
 });
 
+const filledIds = (slots: LeagueSlot[]): AthleteId[] =>
+  slots.filter((id): id is AthleteId => id !== null);
+
 export function leagueTable(
   _athletes: Athlete[],
   fixtures: FifaFixture[],
-  leagueIds: AthleteId[]
+  leagueSlots: LeagueSlot[]
 ): LeagueRow[] {
-  const rows = new Map<AthleteId, LeagueRow>(leagueIds.map((id) => [id, blankRow(id)]));
+  const ids = filledIds(leagueSlots);
+  if (ids.length === 0) return [];
+
+  const rows = new Map<AthleteId, LeagueRow>(ids.map((id) => [id, blankRow(id)]));
 
   for (const fx of fixtures) {
     if (!isCompleted(fx)) continue;
@@ -84,23 +95,24 @@ export function leagueTable(
   return sorted;
 }
 
-function leagueHasAllResults(fixtures: FifaFixture[], league: 1 | 2): boolean {
+function leagueComplete(slots: LeagueSlot[], fixtures: FifaFixture[], league: 1 | 2): boolean {
+  if (slots.some((s) => s === null)) return false;
   const leagueFixtures = fixtures.filter((f) => f.league === league);
   if (leagueFixtures.length === 0) return false;
   return leagueFixtures.every(isCompleted);
 }
 
 export function knockoutPairings(
-  league1Ids: AthleteId[],
-  league2Ids: AthleteId[],
+  league1Slots: LeagueSlot[],
+  league2Slots: LeagueSlot[],
   fixtures: FifaFixture[]
 ): KnockoutPairings {
-  if (!leagueHasAllResults(fixtures, 1) || !leagueHasAllResults(fixtures, 2)) {
+  if (!leagueComplete(league1Slots, fixtures, 1) || !leagueComplete(league2Slots, fixtures, 2)) {
     return { final: null, thirdPlace: null };
   }
 
-  const l1 = leagueTable([], fixtures, league1Ids);
-  const l2 = leagueTable([], fixtures, league2Ids);
+  const l1 = leagueTable([], fixtures, league1Slots);
+  const l2 = leagueTable([], fixtures, league2Slots);
 
   if (l1[0].tiebreakNeeded || l2[0].tiebreakNeeded) {
     return { final: null, thirdPlace: null };
@@ -112,35 +124,106 @@ export function knockoutPairings(
   };
 }
 
-function isKnockoutDecided(score: { homeGoals: number | null; awayGoals: number | null }): boolean {
-  return (
-    Number.isInteger(score.homeGoals) &&
-    Number.isInteger(score.awayGoals) &&
-    score.homeGoals !== score.awayGoals
-  );
+export function decideKnockout(score: FifaKnockoutScore): KnockoutSide | null {
+  if (!Number.isInteger(score.homeGoals) || !Number.isInteger(score.awayGoals)) return null;
+  if (score.homeGoals! > score.awayGoals!) return 'home';
+  if (score.awayGoals! > score.homeGoals!) return 'away';
+  return score.wonOnPens ?? null;
+}
+
+export function fifaContributions(
+  athletes: Athlete[],
+  fifa: FifaEvent
+): Map<AthleteId, FifaContribution> {
+  const result = new Map<AthleteId, FifaContribution>(athletes.map((a) => [a.id, 'pending']));
+
+  const pairings = knockoutPairings(fifa.league1, fifa.league2, fifa.fixtures);
+  if (!pairings.final || !pairings.thirdPlace) return result;
+
+  const inKnockout = new Set<AthleteId>([
+    pairings.final.home,
+    pairings.final.away,
+    pairings.thirdPlace.home,
+    pairings.thirdPlace.away
+  ]);
+  for (const a of athletes) {
+    if (!inKnockout.has(a.id)) result.set(a.id, 0);
+  }
+
+  const finalSide = decideKnockout(fifa.final);
+  if (finalSide) {
+    const winner = finalSide === 'home' ? pairings.final.home : pairings.final.away;
+    const loser = finalSide === 'home' ? pairings.final.away : pairings.final.home;
+    result.set(winner, 3);
+    result.set(loser, 2);
+  }
+
+  const thirdSide = decideKnockout(fifa.thirdPlace);
+  if (thirdSide) {
+    const winner = thirdSide === 'home' ? pairings.thirdPlace.home : pairings.thirdPlace.away;
+    const loser = thirdSide === 'home' ? pairings.thirdPlace.away : pairings.thirdPlace.home;
+    result.set(winner, 1);
+    result.set(loser, 0);
+  }
+
+  return result;
 }
 
 export function fifaPoints(athletes: Athlete[], fifa: FifaEvent): Map<AthleteId, number> {
-  const pts = new Map<AthleteId, number>(athletes.map((a) => [a.id, 0]));
+  const out = new Map<AthleteId, number>();
+  for (const [id, val] of fifaContributions(athletes, fifa)) {
+    out.set(id, typeof val === 'number' ? val : 0);
+  }
+  return out;
+}
 
-  if (!isKnockoutDecided(fifa.final) || !isKnockoutDecided(fifa.thirdPlace)) {
-    return pts;
+function pairKey(league: number, a: AthleteId, b: AthleteId): string {
+  const [x, y] = [a, b].sort();
+  return `${league}|${x}|${y}`;
+}
+
+export function regenerateFixtures(
+  league1Slots: LeagueSlot[],
+  league2Slots: LeagueSlot[],
+  existing: FifaFixture[]
+): FifaFixture[] {
+  const oldByKey = new Map<string, FifaFixture>();
+  for (const fx of existing) {
+    oldByKey.set(pairKey(fx.league, fx.home, fx.away), fx);
   }
 
-  const pairings = knockoutPairings(fifa.league1, fifa.league2, fifa.fixtures);
-  if (!pairings.final || !pairings.thirdPlace) return pts;
+  const out: FifaFixture[] = [];
+  const buildLeague = (league: 1 | 2, slots: LeagueSlot[]) => {
+    const ids = filledIds(slots);
+    for (let i = 0; i < ids.length; i++) {
+      for (let j = i + 1; j < ids.length; j++) {
+        const home = ids[i];
+        const away = ids[j];
+        const old = oldByKey.get(pairKey(league, home, away));
+        let homeGoals: number | null = null;
+        let awayGoals: number | null = null;
+        if (old) {
+          if (old.home === home) {
+            homeGoals = old.homeGoals;
+            awayGoals = old.awayGoals;
+          } else {
+            homeGoals = old.awayGoals;
+            awayGoals = old.homeGoals;
+          }
+        }
+        out.push({
+          id: pairFixtureId(league, home, away),
+          league,
+          home,
+          away,
+          homeGoals,
+          awayGoals
+        });
+      }
+    }
+  };
 
-  const finalWinner =
-    fifa.final.homeGoals! > fifa.final.awayGoals! ? pairings.final.home : pairings.final.away;
-  const thirdWinner =
-    fifa.thirdPlace.homeGoals! > fifa.thirdPlace.awayGoals!
-      ? pairings.thirdPlace.home
-      : pairings.thirdPlace.away;
-  const finalLoser = pairings.final.home === finalWinner ? pairings.final.away : pairings.final.home;
-
-  pts.set(finalWinner, 3);
-  pts.set(finalLoser, 2);
-  pts.set(thirdWinner, 1);
-
-  return pts;
+  buildLeague(1, league1Slots);
+  buildLeague(2, league2Slots);
+  return out;
 }

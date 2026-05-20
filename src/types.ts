@@ -16,14 +16,20 @@ export interface FifaFixture {
   awayGoals: number | null;
 }
 
+export type Side = 'home' | 'away';
+export type KnockoutSide = Side;
+
 export interface FifaKnockoutScore {
   homeGoals: number | null;
   awayGoals: number | null;
+  wonOnPens: KnockoutSide | null;
 }
 
+export type LeagueSlot = AthleteId | null;
+
 export interface FifaEvent {
-  league1: AthleteId[];
-  league2: AthleteId[];
+  league1: LeagueSlot[];
+  league2: LeagueSlot[];
   fixtures: FifaFixture[];
   final: FifaKnockoutScore;
   thirdPlace: FifaKnockoutScore;
@@ -33,11 +39,28 @@ export interface PlaceholderEvent {
   placeholder: true;
 }
 
+export interface PoolQuarterFinal {
+  home: AthleteId | null;
+  away: AthleteId | null;
+  winner: Side | null;
+}
+
+export interface PoolEvent {
+  qf1: PoolQuarterFinal;
+  qf2: PoolQuarterFinal;
+  qf3: PoolQuarterFinal;
+  byePlayer: AthleteId | null;
+  sf1Winner: Side | null;
+  sf2Winner: Side | null;
+  finalWinner: Side | null;
+  thirdPlaceWinner: Side | null;
+}
+
 export type EventId = 'fifa' | 'pool' | 'footgolf' | 'frisbeegolf' | 'aarticulate' | 'challenges';
 
 export interface CompetitionEvents {
   fifa: FifaEvent;
-  pool: PlaceholderEvent;
+  pool: PoolEvent;
   footgolf: PlaceholderEvent;
   frisbeegolf: PlaceholderEvent;
   aarticulate: PlaceholderEvent;
@@ -76,3 +99,6 @@ export interface LeaderboardRow {
   perEvent: Record<EventId, number>;
   total: number;
 }
+
+export type FifaContribution = number | 'pending';
+export type EventContribution = FifaContribution;

@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { EVENTS, eventById } from '../lib/config';
 import type { EventId } from '../types';
 import { Fifa } from './events/Fifa';
+import { Pool } from './events/Pool';
 
 export function EventsIndex() {
   const [selected, setSelected] = useState<EventId>(EVENTS[0].id);
@@ -36,6 +37,8 @@ export function EventsIndex() {
 
       {event.id === 'fifa' ? (
         <Fifa />
+      ) : event.id === 'pool' ? (
+        <Pool />
       ) : (
         <section className="rounded-2xl border border-line bg-white p-6 text-center text-sm italic text-sub shadow-sm">
           {event.label} is not yet implemented — coming soon.

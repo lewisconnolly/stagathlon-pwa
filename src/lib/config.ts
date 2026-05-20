@@ -24,7 +24,21 @@ export const EVENTS: EventConfig[] = [
       'League ties decided by GD → GF → Thumb War'
     ]
   },
-  { id: 'pool', label: 'Pool', icon: '🎱', status: 'placeholder', instructions: ['Coming soon.'] },
+  {
+    id: 'pool',
+    label: 'Pool',
+    icon: '🎱',
+    status: 'live',
+    instructions: [
+      'Knock-out tournament; 7 games total',
+      'Quarters → Semis → Final',
+      '3rd place play-off',
+      '1 player gets a bye to the semi-final',
+      'Winner gets 3 pts',
+      'Runner-up gets 2 pts',
+      '3rd place gets 1 pt'
+    ]
+  },
   { id: 'footgolf', label: 'Footgolf', icon: '⚽', status: 'placeholder', instructions: ['Coming soon.'] },
   { id: 'frisbeegolf', label: 'Frisbeegolf', icon: '🥏', status: 'placeholder', instructions: ['Coming soon.'] },
   { id: 'aarticulate', label: 'Aarticulate', icon: '🗣️', status: 'placeholder', instructions: ['Coming soon.'] },
@@ -34,21 +48,9 @@ export const EVENTS: EventConfig[] = [
 export const eventById = (id: string): EventConfig | undefined =>
   EVENTS.find((e) => e.id === id);
 
-export function generateRoundRobin(
-  leagueNum: 1 | 2,
-  athleteIds: string[]
-): { id: string; league: 1 | 2; home: string; away: string }[] {
-  const fixtures: { id: string; league: 1 | 2; home: string; away: string }[] = [];
-  let n = 1;
-  for (let i = 0; i < athleteIds.length; i++) {
-    for (let j = i + 1; j < athleteIds.length; j++) {
-      fixtures.push({
-        id: `l${leagueNum}-${n++}`,
-        league: leagueNum,
-        home: athleteIds[i],
-        away: athleteIds[j]
-      });
-    }
-  }
-  return fixtures;
+export const LEAGUE_SIZES = { 1: 3, 2: 4 } as const;
+
+export function pairFixtureId(league: 1 | 2, a: string, b: string): string {
+  const [x, y] = [a, b].sort();
+  return `l${league}-${x}-${y}`;
 }

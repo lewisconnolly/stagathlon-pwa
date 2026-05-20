@@ -1,6 +1,13 @@
 import { describe, expect, it } from 'vitest';
 import type { Athlete, FifaEvent, FifaFixture } from '../../types';
-import { fifaPoints, knockoutPairings, leagueTable } from './fifa';
+import {
+  decideKnockout,
+  fifaContributions,
+  fifaPoints,
+  knockoutPairings,
+  leagueTable,
+  regenerateFixtures
+} from './fifa';
 
 const athletes: Athlete[] = [
   { id: 'a', name: 'Alex' },
@@ -148,6 +155,19 @@ describe('leagueTable', () => {
   });
 });
 
+describe('leagueTable with null slots', () => {
+  it('ignores null slots and only produces rows for assigned players', () => {
+    const fixtures = league1RoundRobin([['a', 'c', 2, 1]]);
+    const rows = leagueTable(athletes, fixtures, ['a', null, 'c']);
+    expect(rows.map((r) => r.athleteId).sort()).toEqual(['a', 'c']);
+  });
+
+  it('returns empty array when all slots are null', () => {
+    const rows = leagueTable(athletes, [], [null, null, null]);
+    expect(rows).toEqual([]);
+  });
+});
+
 describe('knockoutPairings', () => {
   const completeLeague1 = league1RoundRobin([
     ['a', 'b', 2, 1],
@@ -186,6 +206,77 @@ describe('knockoutPairings', () => {
     expect(result.final).toBeNull();
     expect(result.thirdPlace).toBeNull();
   });
+
+  it('returns nulls when any league has an empty slot', () => {
+    const result = knockoutPairings(
+      ['a', null, 'c'],
+      league2Ids,
+      [...completeLeague1, ...completeLeague2]
+    );
+    expect(result.final).toBeNull();
+    expect(result.thirdPlace).toBeNull();
+  });
+});
+
+describe('regenerateFixtures', () => {
+  it('produces one round-robin fixture per pair within a league', () => {
+    const fixtures = regenerateFixtures(['a', 'b', 'c'], ['d', 'e', 'f', 'g'], []);
+    expect(fixtures.filter((f) => f.league === 1)).toHaveLength(3);
+    expect(fixtures.filter((f) => f.league === 2)).toHaveLength(6);
+  });
+
+  it('skips null slots', () => {
+    const fixtures = regenerateFixtures(['a', null, 'c'], [null, null, null, null], []);
+    expect(fixtures).toHaveLength(1);
+    expect(fixtures[0].home).toBe('a');
+    expect(fixtures[0].away).toBe('c');
+  });
+
+  it('preserves scores for matchups that survive', () => {
+    const old: FifaFixture[] = [
+      { id: 'l1-a-b', league: 1, home: 'a', away: 'b', homeGoals: 3, awayGoals: 1 },
+      { id: 'l1-a-c', league: 1, home: 'a', away: 'c', homeGoals: 2, awayGoals: 2 },
+      { id: 'l1-b-c', league: 1, home: 'b', away: 'c', homeGoals: 0, awayGoals: 1 }
+    ];
+    const fixtures = regenerateFixtures(['a', 'b', 'c'], [null, null, null, null], old);
+    const byPair = Object.fromEntries(
+      fixtures.map((f) => [[f.home, f.away].sort().join('-'), f])
+    );
+    expect(byPair['a-b'].homeGoals).toBe(3);
+    expect(byPair['a-b'].awayGoals).toBe(1);
+    expect(byPair['a-c'].homeGoals).toBe(2);
+    expect(byPair['a-c'].awayGoals).toBe(2);
+    expect(byPair['b-c'].homeGoals).toBe(0);
+    expect(byPair['b-c'].awayGoals).toBe(1);
+  });
+
+  it('swaps home/away goals when the new pair is in reversed order', () => {
+    const old: FifaFixture[] = [
+      { id: 'l1-a-b', league: 1, home: 'b', away: 'a', homeGoals: 4, awayGoals: 1 }
+    ];
+    const fixtures = regenerateFixtures(['a', 'b', null], [null, null, null, null], old);
+    expect(fixtures).toHaveLength(1);
+    expect(fixtures[0].home).toBe('a');
+    expect(fixtures[0].away).toBe('b');
+    expect(fixtures[0].homeGoals).toBe(1);
+    expect(fixtures[0].awayGoals).toBe(4);
+  });
+
+  it('drops fixtures for matchups that no longer exist', () => {
+    const old: FifaFixture[] = [
+      { id: 'l1-a-b', league: 1, home: 'a', away: 'b', homeGoals: 3, awayGoals: 1 }
+    ];
+    const fixtures = regenerateFixtures(['a', null, null], [null, null, null, null], old);
+    expect(fixtures).toEqual([]);
+  });
+
+  it('uses deterministic IDs based on the league + sorted pair', () => {
+    const fixtures = regenerateFixtures(['a', 'b', 'c'], [null, null, null, null], []);
+    fixtures.forEach((f) => {
+      const sorted = [f.home, f.away].sort().join('-');
+      expect(f.id).toBe(`l${f.league}-${sorted}`);
+    });
+  });
 });
 
 describe('fifaPoints', () => {
@@ -207,8 +298,8 @@ describe('fifaPoints', () => {
     league1: league1Ids,
     league2: league2Ids,
     fixtures: [...completeLeague1, ...completeLeague2],
-    final: { homeGoals: null, awayGoals: null },
-    thirdPlace: { homeGoals: null, awayGoals: null }
+    final: { homeGoals: null, awayGoals: null, wonOnPens: null },
+    thirdPlace: { homeGoals: null, awayGoals: null, wonOnPens: null }
   };
 
   it('returns zero for everyone when knockouts are not complete', () => {
@@ -216,19 +307,22 @@ describe('fifaPoints', () => {
     athletes.forEach((a) => expect(pts.get(a.id)).toBe(0));
   });
 
-  it('returns zero when only final is filled', () => {
+  it('awards 3 and 2 when only the final is decided', () => {
     const pts = fifaPoints(athletes, {
       ...baseFifa,
-      final: { homeGoals: 2, awayGoals: 1 }
+      final: { homeGoals: 2, awayGoals: 1, wonOnPens: null }
     });
-    athletes.forEach((a) => expect(pts.get(a.id)).toBe(0));
+    expect(pts.get('a')).toBe(3); // L1 winner = final winner
+    expect(pts.get('d')).toBe(2); // L2 winner = final loser
+    expect(pts.get('b')).toBe(0); // L1 runner-up — 3rd-place still pending → 0
+    expect(pts.get('e')).toBe(0);
   });
 
   it('awards 3/2/1 once final and 3rd-place are decided', () => {
     const pts = fifaPoints(athletes, {
       ...baseFifa,
-      final: { homeGoals: 3, awayGoals: 1 },
-      thirdPlace: { homeGoals: 2, awayGoals: 0 }
+      final: { homeGoals: 3, awayGoals: 1, wonOnPens: null },
+      thirdPlace: { homeGoals: 2, awayGoals: 0, wonOnPens: null }
     });
     expect(pts.get('a')).toBe(3);
     expect(pts.get('d')).toBe(2);
@@ -239,12 +333,133 @@ describe('fifaPoints', () => {
     expect(pts.get('g')).toBe(0);
   });
 
-  it('returns zero when knockout score is a draw (winner undecided)', () => {
+  it('awards 1 from 3rd-place even if the final is still a draw', () => {
     const pts = fifaPoints(athletes, {
       ...baseFifa,
-      final: { homeGoals: 2, awayGoals: 2 },
-      thirdPlace: { homeGoals: 1, awayGoals: 0 }
+      final: { homeGoals: 2, awayGoals: 2, wonOnPens: null },
+      thirdPlace: { homeGoals: 1, awayGoals: 0, wonOnPens: null }
     });
-    athletes.forEach((a) => expect(pts.get(a.id)).toBe(0));
+    expect(pts.get('b')).toBe(1); // 3rd-place winner
+    expect(pts.get('e')).toBe(0); // 3rd-place loser
+    expect(pts.get('a')).toBe(0); // final pair still pending → 0 in flattened view
+    expect(pts.get('d')).toBe(0);
+  });
+});
+
+describe('fifaContributions', () => {
+  const completeLeague1 = league1RoundRobin([
+    ['a', 'b', 2, 1],
+    ['a', 'c', 3, 0],
+    ['b', 'c', 1, 0]
+  ]);
+  const completeLeague2 = league2RoundRobin([
+    ['d', 'e', 2, 1],
+    ['d', 'f', 1, 0],
+    ['d', 'g', 1, 0],
+    ['e', 'f', 2, 0],
+    ['e', 'g', 1, 1],
+    ['f', 'g', 0, 0]
+  ]);
+
+  const baseFifa: FifaEvent = {
+    league1: league1Ids,
+    league2: league2Ids,
+    fixtures: [...completeLeague1, ...completeLeague2],
+    final: { homeGoals: null, awayGoals: null, wonOnPens: null },
+    thirdPlace: { homeGoals: null, awayGoals: null, wonOnPens: null }
+  };
+
+  it('marks every athlete pending when leagues are incomplete', () => {
+    const partial = [...completeLeague1.slice(0, 2), { ...completeLeague1[2], homeGoals: null }];
+    const result = fifaContributions(athletes, {
+      ...baseFifa,
+      fixtures: [...partial, ...completeLeague2]
+    });
+    athletes.forEach((a) => expect(result.get(a.id)).toBe('pending'));
+  });
+
+  it('marks non-knockout players as 0 once leagues complete, knockout pairs as pending', () => {
+    const result = fifaContributions(athletes, baseFifa);
+    // a (L1 1st) and d (L2 1st) are in final → pending
+    expect(result.get('a')).toBe('pending');
+    expect(result.get('d')).toBe('pending');
+    // b (L1 2nd) and e (L2 2nd) are in 3rd-place → pending
+    expect(result.get('b')).toBe('pending');
+    expect(result.get('e')).toBe('pending');
+    // c (L1 3rd), f (L2 3rd), g (L2 4th) are not in any knockout → 0
+    expect(result.get('c')).toBe(0);
+    expect(result.get('f')).toBe(0);
+    expect(result.get('g')).toBe(0);
+  });
+
+  it('resolves final pair when final is decided, keeps 3rd-place pair pending', () => {
+    const result = fifaContributions(athletes, {
+      ...baseFifa,
+      final: { homeGoals: 3, awayGoals: 1, wonOnPens: null }
+    });
+    expect(result.get('a')).toBe(3);
+    expect(result.get('d')).toBe(2);
+    expect(result.get('b')).toBe('pending');
+    expect(result.get('e')).toBe('pending');
+    expect(result.get('c')).toBe(0);
+  });
+
+  it('resolves 3rd-place pair independently of the final', () => {
+    const result = fifaContributions(athletes, {
+      ...baseFifa,
+      thirdPlace: { homeGoals: 2, awayGoals: 0, wonOnPens: null }
+    });
+    expect(result.get('b')).toBe(1);
+    expect(result.get('e')).toBe(0);
+    expect(result.get('a')).toBe('pending');
+    expect(result.get('d')).toBe('pending');
+  });
+
+  it('uses wonOnPens to break a draw in the final', () => {
+    const result = fifaContributions(athletes, {
+      ...baseFifa,
+      final: { homeGoals: 2, awayGoals: 2, wonOnPens: 'away' }
+    });
+    // pairings.final = { home: 'a', away: 'd' }; away ('d') won on pens
+    expect(result.get('d')).toBe(3);
+    expect(result.get('a')).toBe(2);
+  });
+
+  it('uses wonOnPens to break a draw in the 3rd-place playoff', () => {
+    const result = fifaContributions(athletes, {
+      ...baseFifa,
+      thirdPlace: { homeGoals: 1, awayGoals: 1, wonOnPens: 'home' }
+    });
+    // pairings.thirdPlace = { home: 'b', away: 'e' }; home ('b') won on pens
+    expect(result.get('b')).toBe(1);
+    expect(result.get('e')).toBe(0);
+  });
+});
+
+describe('decideKnockout', () => {
+  it('returns null when either score is missing', () => {
+    expect(decideKnockout({ homeGoals: null, awayGoals: 2, wonOnPens: null })).toBeNull();
+    expect(decideKnockout({ homeGoals: 1, awayGoals: null, wonOnPens: null })).toBeNull();
+  });
+
+  it('returns home when home scores more', () => {
+    expect(decideKnockout({ homeGoals: 3, awayGoals: 1, wonOnPens: null })).toBe('home');
+  });
+
+  it('returns away when away scores more', () => {
+    expect(decideKnockout({ homeGoals: 0, awayGoals: 2, wonOnPens: null })).toBe('away');
+  });
+
+  it('returns null on a draw without pens', () => {
+    expect(decideKnockout({ homeGoals: 2, awayGoals: 2, wonOnPens: null })).toBeNull();
+  });
+
+  it('returns the pens side on a draw with pens set', () => {
+    expect(decideKnockout({ homeGoals: 2, awayGoals: 2, wonOnPens: 'home' })).toBe('home');
+    expect(decideKnockout({ homeGoals: 2, awayGoals: 2, wonOnPens: 'away' })).toBe('away');
+  });
+
+  it('ignores pens when goals are decisive', () => {
+    expect(decideKnockout({ homeGoals: 3, awayGoals: 1, wonOnPens: 'away' })).toBe('home');
   });
 });

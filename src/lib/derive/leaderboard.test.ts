@@ -17,11 +17,20 @@ const baseCompetition = (overrides: Partial<Competition['events']['fifa']> = {})
       league1: ['a', 'b', 'c'],
       league2: ['d', 'e', 'f', 'g'],
       fixtures: [],
-      final: { homeGoals: null, awayGoals: null },
-      thirdPlace: { homeGoals: null, awayGoals: null },
+      final: { homeGoals: null, awayGoals: null, wonOnPens: null },
+      thirdPlace: { homeGoals: null, awayGoals: null, wonOnPens: null },
       ...overrides
     },
-    pool: { placeholder: true },
+    pool: {
+      qf1: { home: null, away: null, winner: null },
+      qf2: { home: null, away: null, winner: null },
+      qf3: { home: null, away: null, winner: null },
+      byePlayer: null,
+      sf1Winner: null,
+      sf2Winner: null,
+      finalWinner: null,
+      thirdPlaceWinner: null
+    },
     footgolf: { placeholder: true },
     frisbeegolf: { placeholder: true },
     aarticulate: { placeholder: true },
@@ -66,8 +75,8 @@ describe('leaderboard', () => {
     const rows = leaderboard(
       baseCompetition({
         fixtures: completeFixtures,
-        final: { homeGoals: 3, awayGoals: 1 },
-        thirdPlace: { homeGoals: 2, awayGoals: 0 }
+        final: { homeGoals: 3, awayGoals: 1, wonOnPens: null },
+        thirdPlace: { homeGoals: 2, awayGoals: 0, wonOnPens: null }
       })
     );
     const byId = Object.fromEntries(rows.map((r) => [r.athleteId, r]));
@@ -84,8 +93,8 @@ describe('leaderboard', () => {
     const rows = leaderboard(
       baseCompetition({
         fixtures: completeFixtures,
-        final: { homeGoals: 3, awayGoals: 1 },
-        thirdPlace: { homeGoals: 2, awayGoals: 0 }
+        final: { homeGoals: 3, awayGoals: 1, wonOnPens: null },
+        thirdPlace: { homeGoals: 2, awayGoals: 0, wonOnPens: null }
       })
     );
     const totals = rows.map((r) => r.total);

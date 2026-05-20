@@ -2,7 +2,7 @@
 
 ## UI Mockup
 
-![fifa event ui mockup](images/fifa.png)
+![fifa event ui mockup](images/fifa.jpg)
 
 ## Leaderboard Consequences
 
@@ -23,6 +23,12 @@ Third place winner gets 1 pt.
 >- Runner-up gets 2 pts
 >- 3rd place gets 1 pt
 >- League ties decided by GD -> GF -> Thumb War
+
+### LEADERBOARD POINTS CONTRIBUTION
+
+* Table displaying final points after the finals have been completed
+* Automatically populated based on the results of the finals.
+* Only populated once the 3RD place play off or Final have a winner.
 
 ### FINAL
 
@@ -51,6 +57,8 @@ Automatic calculation and entry of:
 
 Table cells are initialised to 0.
 
+Single click/tap athelete name in table to select player from drop down menu.
+
 ### LEAGUE 2
 
 A points table containing 4 players. Same functionality as the league 1 table.
@@ -58,6 +66,7 @@ A points table containing 4 players. Same functionality as the league 1 table.
 ### FIXTURES
 
 * A list of fixtures with UI elements displaying which player is facing which and input boxes below each player for entering the number of goals they scored in the match.
+* Automatically generated from league player selections (everyone place everyone once). 
 * Each fixture has a label to the left of it for the league it is for.
 * The fixture score is blank until a number is entered.
 * The fixture only affects the points tables when valid numbers have been entered in each goals box.
