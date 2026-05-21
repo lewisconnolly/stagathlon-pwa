@@ -76,7 +76,18 @@ async function main() {
       footgolf: emptyTeamEvent(),
       frisbeegolf: emptyTeamEvent(),
       aarticulate: emptyTeamEvent(),
-      challenges: { points: {} }
+      challenges: { points: {} },
+      kubb: {
+        teams: [
+          { name: 'Team 1', members: [null, null] },
+          { name: 'Team 2', members: [null, null] },
+          { name: 'Team 3', members: [null, null] },
+          { name: 'Team 4', members: [null] }
+        ],
+        sf1: { home: null, away: null, winner: null },
+        sf2: { home: null, away: null, winner: null },
+        finalWinner: null
+      }
     }
   };
 

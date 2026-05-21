@@ -4,11 +4,11 @@ export interface ArticulateCard {
   world: string;
   object: string;
   action: string;
-  nature: string;
+  media: string;
   random: string;
 }
 
-export type CardCategory = 'person' | 'world' | 'object' | 'action' | 'nature' | 'random';
+export type CardCategory = 'person' | 'world' | 'object' | 'action' | 'media' | 'random';
 
 // Fisher-Yates shuffle. Returns a new array; does not mutate the input.
 export function shuffleDeck<T>(cards: T[]): T[] {

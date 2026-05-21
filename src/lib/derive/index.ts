@@ -13,4 +13,10 @@ export {
   challengesPoints,
   ensureChallengesShape
 } from './challenges';
+export {
+  deriveKubbMatches,
+  ensureKubbShape,
+  kubbContributions,
+  kubbPoints
+} from './kubb';
 export { leaderboard } from './leaderboard';

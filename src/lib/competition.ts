@@ -7,6 +7,7 @@ import type {
   FifaEvent,
   FifaFixture,
   FifaKnockoutScore,
+  KubbEvent,
   PoolEvent,
   TeamEvent
 } from '../types';
@@ -82,6 +83,10 @@ export async function setAarticulate(state: TeamEvent): Promise<void> {
 
 export async function setChallenges(state: ChallengesEvent): Promise<void> {
   await updateDoc(competitionRef(), { 'events.challenges': state });
+}
+
+export async function setKubb(state: KubbEvent): Promise<void> {
+  await updateDoc(competitionRef(), { 'events.kubb': state });
 }
 
 export async function setFifaFixtures(fixtures: FifaFixture[]): Promise<void> {

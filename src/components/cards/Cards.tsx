@@ -14,7 +14,7 @@ const CATEGORIES: Array<{
   { key: 'world', label: 'World', letter: 'W', badgeBg: 'bg-sky-400', suitBg: 'bg-sky-400' },
   { key: 'object', label: 'Object', letter: 'O', badgeBg: 'bg-blue-600', suitBg: 'bg-blue-600' },
   { key: 'action', label: 'Action', letter: 'A', badgeBg: 'bg-orange-500', suitBg: 'bg-orange-500' },
-  { key: 'nature', label: 'Nature', letter: 'N', badgeBg: 'bg-green-600', suitBg: 'bg-green-600' },
+  { key: 'media', label: 'Media', letter: 'M', badgeBg: 'bg-green-600', suitBg: 'bg-green-600' },
   { key: 'random', label: 'Random', letter: 'R', badgeBg: 'bg-red-600', suitBg: 'bg-red-600' }
 ];
 

@@ -55,7 +55,18 @@ const baseCompetition = (overrides: Partial<Competition['events']['fifa']> = {})
       ],
       standings: { first: null, second: null, third: null }
     },
-    challenges: { points: {} }
+    challenges: { points: {} },
+    kubb: {
+      teams: [
+        { name: 'Team 1', members: [null, null] },
+        { name: 'Team 2', members: [null, null] },
+        { name: 'Team 3', members: [null, null] },
+        { name: 'Team 4', members: [null] }
+      ],
+      sf1: { home: null, away: null, winner: null },
+      sf2: { home: null, away: null, winner: null },
+      finalWinner: null
+    }
   }
 });
 
@@ -83,11 +94,11 @@ describe('leaderboard', () => {
     });
   });
 
-  it('includes columns for all 6 events on every row', () => {
+  it('includes columns for all 7 events on every row', () => {
     const rows = leaderboard(baseCompetition());
     rows.forEach((r) => {
       expect(Object.keys(r.perEvent).sort()).toEqual(
-        ['aarticulate', 'challenges', 'fifa', 'footgolf', 'frisbeegolf', 'pool']
+        ['aarticulate', 'challenges', 'fifa', 'footgolf', 'frisbeegolf', 'kubb', 'pool']
       );
     });
   });

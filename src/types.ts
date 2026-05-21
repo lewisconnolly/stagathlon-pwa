@@ -78,7 +78,29 @@ export interface ChallengesEvent {
   points: Record<AthleteId, number>;
 }
 
-export type EventId = 'fifa' | 'pool' | 'footgolf' | 'frisbeegolf' | 'aarticulate' | 'challenges';
+export type KubbTeamIndex = 0 | 1 | 2 | 3;
+
+export interface KubbSemiFinal {
+  home: KubbTeamIndex | null;
+  away: KubbTeamIndex | null;
+  winner: Side | null;
+}
+
+export interface KubbEvent {
+  teams: [TeamConfig, TeamConfig, TeamConfig, TeamConfig];
+  sf1: KubbSemiFinal;
+  sf2: KubbSemiFinal;
+  finalWinner: Side | null;
+}
+
+export type EventId =
+  | 'fifa'
+  | 'pool'
+  | 'footgolf'
+  | 'frisbeegolf'
+  | 'aarticulate'
+  | 'challenges'
+  | 'kubb';
 
 export interface CompetitionEvents {
   fifa: FifaEvent;
@@ -87,6 +109,7 @@ export interface CompetitionEvents {
   frisbeegolf: TeamEvent;
   aarticulate: TeamEvent;
   challenges: ChallengesEvent;
+  kubb: KubbEvent;
 }
 
 export interface Competition {

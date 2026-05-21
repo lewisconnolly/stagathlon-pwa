@@ -10,6 +10,17 @@ export interface EventConfig {
 
 export const EVENTS: EventConfig[] = [
   {
+    id: 'kubb',
+    label: 'Kubb',
+    icon: '🪵',
+    status: 'live',
+    instructions: [
+      'Semi-Finals and Final',
+      'Winner = 2 pts to each team member',
+      'Runner-up = 1 pt to each team member'
+    ]
+  },
+  {
     id: 'fifa',
     label: 'FIFA',
     icon: '🎮',

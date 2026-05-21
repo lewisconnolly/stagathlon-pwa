@@ -3,44 +3,44 @@
         {
             "key": "glitches",
             "name": "Aaron",
-            "points": 2,
-            "challenge": "When you or the group are leaving to go somewhere, call out 'Wagons roll!' or 'Mount up!' audibly enough for everyone to hear you. For example, when leaving Rothiemurchus to go to the golf course. Each time you do this you will get 2 points."
+            "points": 3,
+            "challenge": "Challenge a stranger to a friendly thumb war (3pts) or an arm wrestle (6pts). Each time you do either challenge you earn points. If you win your thumb war or arm wrestle you earn 3 bonus points."
         },
         {
             "key": "solaire",
             "name": "Andy",
             "points": 2,
-            "challenge": "Call Aaron the 'Govenor'. Calling him Govenor directly or referring to him as Govenor within his earshot both count. Each time you do this you will earn 2 points."
+            "challenge": "Call Aaron the 'Govenor'. Calling him Govenor directly or referring to him as Govenor within his earshot both count. Each time you do this you earn 2 points."
         },
         {
             "key": "rudichenko",
             "name": "Jack",
-            "points": 3,
-            "challenge": "Placeholder"
+            "points": 1,
+            "challenge": "Get a drink (3pts), a cigarette (2pts), or vape (1pt) from a stranger, without trading. Each time you do these you earn points."
         },
         {
             "key": "boulder",
-            "name": "Kris",
-            "points": 3,
-            "challenge": "Placeholder"
+            "name": "Shaun",
+            "points": 2,
+            "challenge": "Sing a song on karaoke, the whole way through. If it's in public you earn 4 points; in a private setting it's 2 points. Each time you do these you earn points. If your song is a duet you earn 2 bonus points."
         },
         {
             "key": "chica",
             "name": "Lewis",
             "points": 3,
-            "challenge": "Placeholder"
+            "challenge": "Say that's what she said' in a conversation where it is relevant. Each time you do this you earn 3 points."
         },
         {
             "key": "benji",
             "name": "Mike",
-            "points": 3,
-            "challenge": "Placeholder"
+            "points": 2,
+            "challenge": "When you or the group are leaving to go somewhere, call out 'Wagons roll!' or 'Mount up!' audibly enough for everyone to hear you. For example, when leaving Rothiemurchus to go to the golf course. Each time you do this you will get 2 points."
         },
         {
             "key": "lifesizechess",
-            "name": "Shaun",
+            "name": "Kris",
             "points": 3,
-            "challenge": "Placeholder"
+            "challenge": "Get a stranger to ask Aaron if he can come to his wedding (3pts). If Aaron accepts, unconditionally, and it is likely they will attend, you earn a bonus 5 points."
         }         
     ]
 }

@@ -29,7 +29,7 @@ export function Leaderboard() {
       <section className="rounded-2xl border border-line bg-white p-4 shadow-sm">
         <ul className="list-disc space-y-1 pl-5 text-sm text-sub">
           <li>Welcome to the Stagathlon</li>
-          <li>6 events across two days</li>
+          <li>7 events across two days</li>
           <li>Doing well in an event can earn you points towards your total on the leaderboard</li>
           <li>You can use this website to track everyone's points</li>
           <li>Only Lewis can update it</li>

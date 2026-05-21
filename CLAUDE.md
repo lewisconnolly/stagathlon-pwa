@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## What this is
 
-Stagathlon is a PWA for tracking a weekend-long olympics-style competition. Source specs live in `docs/app.md` and `docs/fifa.md`; UI mockups in `docs/images/`. Six events are referenced (`fifa`, `pool`, `footgolf`, `frisbeegolf`, `aarticulate`, `challenges`) — only FIFA is implemented end-to-end. The other five have spec files that don't exist yet and render as "Coming soon" placeholders; their leaderboard columns are present but always zero.
+Stagathlon is a PWA for tracking a weekend-long olympics-style competition. Source specs live in `docs/app.md` and per-event docs in `docs/` (e.g. `docs/fifa.md`, `docs/kubb.md`); UI mockups in `docs/images/`. Seven events are implemented end-to-end (`fifa`, `pool`, `footgolf`, `frisbeegolf`, `aarticulate`, `challenges`, `kubb`).
 
 ## Commands
 
@@ -43,7 +43,7 @@ First-time setup (Firebase project, `.env.local`, seed, hosting) is in `README.m
 1. Add an entry to `EVENTS` in `src/lib/config.ts` (or change the existing placeholder's `status` to `'live'` and fill in `instructions`).
 2. Add the event's data shape under `CompetitionEvents` in `src/types.ts`, replacing `PlaceholderEvent`.
 3. Add a derivation function in `src/lib/derive/<event>.ts` returning `Map<AthleteId, number>` of event points. Write tests first — they're the only safety net.
-4. Wire the points map into `leaderboard()` in `src/lib/derive/leaderboard.ts` (currently only FIFA contributes).
+4. Wire the points map into `leaderboard()` in `src/lib/derive/leaderboard.ts`.
 5. Build the page at `src/pages/events/<Event>.tsx` and add a route in `src/routes.tsx` (above the `:eventId` catch-all).
 6. Update `scripts/seed.ts` to initialize the new event's state for fresh competitions.
 
@@ -60,4 +60,3 @@ First-time setup (Firebase project, `.env.local`, seed, hosting) is in `README.m
 - Offline writes / conflict resolution.
 - Editing the roster or league assignments from the UI (do it via `scripts/seed.ts`).
 - In-app manual tiebreak entry beyond the existing yellow banner.
-- The five non-FIFA events — their specs don't exist.

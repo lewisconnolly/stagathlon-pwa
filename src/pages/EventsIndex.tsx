@@ -6,6 +6,7 @@ import { Challenges } from './events/Challenges';
 import { Fifa } from './events/Fifa';
 import { Footgolf } from './events/Footgolf';
 import { Frisbeegolf } from './events/Frisbeegolf';
+import { Kubb } from './events/Kubb';
 import { Pool } from './events/Pool';
 
 export function EventsIndex() {
@@ -50,6 +51,8 @@ export function EventsIndex() {
         <Frisbeegolf />
       ) : event.id === 'aarticulate' ? (
         <Aarticulate />
+      ) : event.id === 'kubb' ? (
+        <Kubb />
       ) : event.id === 'challenges' ? (
         <Challenges />
       ) : (
