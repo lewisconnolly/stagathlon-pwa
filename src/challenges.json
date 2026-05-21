@@ -19,7 +19,7 @@
             "challenge": "Get a drink (3pts), a cigarette (2pts), or vape (1pt) from a stranger, without trading. Each time you do these you earn points."
         },
         {
-            "key": "boulder",
+            "key": "lifesizechess",
             "name": "Shaun",
             "points": 2,
             "challenge": "Sing a song on karaoke, the whole way through. If it's in public you earn 4 points; in a private setting it's 2 points. Each time you do these you earn points. If your song is a duet you earn 2 bonus points."
@@ -37,7 +37,7 @@
             "challenge": "When you or the group are leaving to go somewhere, call out 'Wagons roll!' or 'Mount up!' audibly enough for everyone to hear you. For example, when leaving Rothiemurchus to go to the golf course. Each time you do this you will get 2 points."
         },
         {
-            "key": "lifesizechess",
+            "key": "delapsanazi",
             "name": "Kris",
             "points": 3,
             "challenge": "Get a stranger to ask Aaron if he can come to his wedding (3pts). If Aaron accepts, unconditionally, and it is likely they will attend, you earn a bonus 5 points."
