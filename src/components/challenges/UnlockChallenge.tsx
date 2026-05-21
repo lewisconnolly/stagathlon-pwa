@@ -102,10 +102,6 @@ export function UnlockChallenge() {
               Hello <span className="font-semibold">{view.entry.name}</span>, here are the details of
               your challenge:
             </p>
-            <p>
-              <span className="font-semibold">Points per instance:</span>{' '}
-              <span className="tabular-nums">{view.entry.points}</span>
-            </p>
             <p className="whitespace-pre-line rounded-md bg-slate-50 p-3 text-ink">
               {view.entry.challenge}
             </p>
