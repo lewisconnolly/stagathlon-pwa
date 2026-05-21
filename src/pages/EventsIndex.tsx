@@ -2,6 +2,7 @@ import { EVENTS, eventById } from '../lib/config';
 import type { EventId } from '../types';
 import { useEventsStore } from '../store/events';
 import { Aarticulate } from './events/Aarticulate';
+import { Challenges } from './events/Challenges';
 import { Fifa } from './events/Fifa';
 import { Footgolf } from './events/Footgolf';
 import { Frisbeegolf } from './events/Frisbeegolf';
@@ -49,6 +50,8 @@ export function EventsIndex() {
         <Frisbeegolf />
       ) : event.id === 'aarticulate' ? (
         <Aarticulate />
+      ) : event.id === 'challenges' ? (
+        <Challenges />
       ) : (
         <section className="rounded-2xl border border-line bg-white p-6 text-center text-sm italic text-sub shadow-sm">
           {event.label} is not yet implemented — coming soon.

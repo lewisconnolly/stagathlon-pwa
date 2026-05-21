@@ -74,6 +74,10 @@ export interface TeamEvent {
   standings: TeamStandings;
 }
 
+export interface ChallengesEvent {
+  points: Record<AthleteId, number>;
+}
+
 export type EventId = 'fifa' | 'pool' | 'footgolf' | 'frisbeegolf' | 'aarticulate' | 'challenges';
 
 export interface CompetitionEvents {
@@ -82,7 +86,7 @@ export interface CompetitionEvents {
   footgolf: TeamEvent;
   frisbeegolf: TeamEvent;
   aarticulate: TeamEvent;
-  challenges: PlaceholderEvent;
+  challenges: ChallengesEvent;
 }
 
 export interface Competition {

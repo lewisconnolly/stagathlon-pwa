@@ -2,6 +2,7 @@ import { createContext, useContext, useEffect, useMemo, useState } from 'react';
 import { doc, onSnapshot, updateDoc } from 'firebase/firestore';
 import { COMPETITION_DOC_PATH, db } from '../firebase';
 import type {
+  ChallengesEvent,
   Competition,
   FifaEvent,
   FifaFixture,
@@ -77,6 +78,10 @@ export async function setFrisbeegolf(state: TeamEvent): Promise<void> {
 
 export async function setAarticulate(state: TeamEvent): Promise<void> {
   await updateDoc(competitionRef(), { 'events.aarticulate': state });
+}
+
+export async function setChallenges(state: ChallengesEvent): Promise<void> {
+  await updateDoc(competitionRef(), { 'events.challenges': state });
 }
 
 export async function setFifaFixtures(fixtures: FifaFixture[]): Promise<void> {

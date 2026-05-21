@@ -55,7 +55,7 @@ const baseCompetition = (overrides: Partial<Competition['events']['fifa']> = {})
       ],
       standings: { first: null, second: null, third: null }
     },
-    challenges: { placeholder: true }
+    challenges: { points: {} }
   }
 });
 
