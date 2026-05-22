@@ -1,5 +1,5 @@
 export interface ArticulateCard {
-  id: string;
+  id: number;
   person: string;
   world: string;
   object: string;

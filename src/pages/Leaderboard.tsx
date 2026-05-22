@@ -1,10 +1,14 @@
 import { useMemo } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { useCompetition } from '../lib/competition';
 import { leaderboard } from '../lib/derive';
 import { EVENTS } from '../lib/config';
+import { useEventsStore } from '../store/events';
 
 export function Leaderboard() {
   const { status, data } = useCompetition();
+  const navigate = useNavigate();
+  const setSelected = useEventsStore((s) => s.setSelected);
 
   const rows = useMemo(() => (data ? leaderboard(data) : []), [data]);
   const athleteName = useMemo(() => {
@@ -44,7 +48,17 @@ export function Leaderboard() {
               <th className="px-3 py-2 text-left">Athlete</th>
               {EVENTS.map((e) => (
                 <th key={e.id} className="px-2 py-2 text-center">
-                  {e.icon}
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setSelected(e.id);
+                      navigate('/events');
+                    }}
+                    aria-label={`Go to ${e.label}`}
+                    className="rounded p-1 text-base leading-none hover:bg-slate-200 active:bg-slate-300"
+                  >
+                    {e.icon}
+                  </button>
                 </th>
               ))}
               <th className="px-3 py-2 text-right">Tot</th>

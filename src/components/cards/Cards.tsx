@@ -26,7 +26,7 @@ export function Cards() {
 
   const [position, setPosition] = useState(0);
   const [score, setScore] = useState(0);
-  const [passedCardId, setPassedCardId] = useState<string | null>(null);
+  const [passedCardId, setPassedCardId] = useState<number | null>(null);
   const [viewingPassed, setViewingPassed] = useState(false);
 
   const deckExhausted = position >= deck.length;

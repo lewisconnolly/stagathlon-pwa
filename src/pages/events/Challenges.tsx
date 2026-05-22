@@ -4,6 +4,7 @@ import { ensureChallengesShape } from '../../lib/derive';
 import { addChallengePoints } from '../../lib/challenge-mutations';
 import { PointsTable } from '../../components/challenges/PointsTable';
 import { UnlockChallenge } from '../../components/challenges/UnlockChallenge';
+import { AllChallenges } from '../../components/challenges/AllChallenges';
 import type { AthleteId } from '../../types';
 
 export function Challenges() {
@@ -26,6 +27,7 @@ export function Challenges() {
     <div className="space-y-5">
       <PointsTable athletes={data.athletes} event={event} onAdjust={onAdjust} />
       <UnlockChallenge />
+      <AllChallenges />
     </div>
   );
 }
