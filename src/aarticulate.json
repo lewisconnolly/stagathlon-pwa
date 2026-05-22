@@ -1,7 +1,7 @@
 {
     "cards": [
         {
-            "id": "1",
+            "id": 1,
             "person": "Leonardo di caprio",
             "object": "Pasta Roller",
             "media": "24 hours in police custody",
@@ -10,7 +10,7 @@
             "random": "Cum in my sweet ass team"
         },
         {
-            "id": "2",
+            "id": 2,
             "person": "Lord Farqhuar",
             "object": "Gaming Mouse",
             "media": "Up",
@@ -19,7 +19,7 @@
             "random": "Life Sized Chess Board"
         },
         {
-            "id": "3",
+            "id": 3,
             "person": "Barry Ferguson",
             "object": "Pool Cue",
             "media": "the wombats",
@@ -28,7 +28,7 @@
             "random": "Cornershop"
         },
         {
-            "id": "4",
+            "id": 4,
             "person": "Bobby Petta",
             "object": "Glasses",
             "media": "the cribs",
@@ -37,7 +37,7 @@
             "random": "Yellow Bomber Jacket"
         },
         {
-            "id": "5",
+            "id": 5,
             "person": "Aaron Moy",
             "object": "BBQ",
             "media": "humbug",
@@ -46,7 +46,7 @@
             "random": "Accumulator"
         },
         {
-            "id": "6",
+            "id": 6,
             "person": "Aaron Sorkin",
             "object": "Scarifier",
             "media": "blackbird",
@@ -55,7 +55,7 @@
             "random": "Orange wine"
         },
         {
-            "id": "7",
+            "id": 7,
             "person": "Dick Advocat",
             "object": "Record Player",
             "media": "the kinks",
@@ -64,7 +64,7 @@
             "random": "Guinness"
         },
         {
-            "id": "8",
+            "id": 8,
             "person": "Martin O'Neill",
             "object": "Fretboard",
             "media": "takeshis castle",
@@ -73,7 +73,7 @@
             "random": "Starling"
         },
         {
-            "id": "9",
+            "id": 9,
             "person": "Daniel O'Donnell",
             "object": "Chalk bag",
             "media": "great british menu",
@@ -82,7 +82,7 @@
             "random": "IMDB"
         },
         {
-            "id": "10",
+            "id": 10,
             "person": "Don Draper",
             "object": "Google Home",
             "media": "revolver",
@@ -91,7 +91,7 @@
             "random": "GoodReads"
         },
         {
-            "id": "11",
+            "id": 11,
             "person": "Bex",
             "object": "Shuttlecock",
             "media": "Sopranos",
@@ -100,7 +100,7 @@
             "random": "Catholicism"
         },
         {
-            "id": "12",
+            "id": 12,
             "person": "Tony Soprano",
             "object": "Shamrock",
             "media": "Wings",
@@ -109,7 +109,7 @@
             "random": "Deepmind"
         },
         {
-            "id": "13",
+            "id": 13,
             "person": "Demi Moore",
             "object": "Nipple-tassles",
             "media": "Let it be",
@@ -118,7 +118,7 @@
             "random": "Strawberry Daiquiri"
         },
         {
-            "id": "14",
+            "id": 14,
             "person": "Aaron Paul",
             "object": "Weetabix",
             "media": "Rubber soul",
@@ -127,7 +127,7 @@
             "random": "Fenian"
         },
         {
-            "id": "15",
+            "id": 15,
             "person": "Aaron Ramsey",
             "object": "Rook",
             "media": "Abbey road",
@@ -136,7 +136,7 @@
             "random": "Indie"
         },
         {
-            "id": "16",
+            "id": 16,
             "person": "Gandalf",
             "object": "Pawn",
             "media": "The Secret History",
@@ -145,7 +145,7 @@
             "random": "Natural Spice"
         },
         {
-            "id": "17",
+            "id": 17,
             "person": "Gary kasparoff",
             "object": "Cockring",
             "media": "50/50",
@@ -154,7 +154,7 @@
             "random": "Starling Bank"
         },
         {
-            "id": "18",
+            "id": 18,
             "person": "Bob Mortimer",
             "object": "PlayStation 2",
             "media": "Arctic Monkeys",
@@ -163,7 +163,7 @@
             "random": "Chess"
         },
         {
-            "id": "19",
+            "id": 19,
             "person": "Neo",
             "object": "Sleeping bag",
             "media": "The Beatles",
@@ -172,7 +172,7 @@
             "random": "Android"
         },
         {
-            "id": "20",
+            "id": 20,
             "person": "Luka Doncic",
             "object": "KY Lube",
             "media": "The Magic Numbers",
@@ -181,7 +181,7 @@
             "random": "Excel"
         },
         {
-            "id": "21",
+            "id": 21,
             "person": "Ms Reid",
             "object": "Vaseline",
             "media": "Guillemots",
@@ -190,7 +190,7 @@
             "random": "Wikipedia"
         },
         {
-            "id": "22",
+            "id": 22,
             "person": "Paul McCartney",
             "object": "Ultrawide Monitor",
             "media": "Wii Sports",
@@ -199,7 +199,7 @@
             "random": "Reddit"
         },
         {
-            "id": "23",
+            "id": 23,
             "person": "Lewis Hamilton",
             "object": "Dildo",
             "media": "Consolevania",
@@ -208,7 +208,7 @@
             "random": "Online Poker"
         },
         {
-            "id": "24",
+            "id": 24,
             "person": "Stringer Bell",
             "object": "Skinny Jeans",
             "media": "Scrubs",
@@ -217,7 +217,7 @@
             "random": "Parkour"
         },
         {
-            "id": "25",
+            "id": 25,
             "person": "Jimmy McNulty",
             "object": "Cineworld Ultimate Card",
             "media": "The Wire",
@@ -226,7 +226,7 @@
             "random": "Euro 2016"
         },
         {
-            "id": "26",
+            "id": 26,
             "person": "Ziggy Sobotka",
             "object": "Rollover Hotdog",
             "media": "Mad Men",
@@ -235,7 +235,7 @@
             "random": "Greggs"
         },
         {
-            "id": "27",
+            "id": 27,
             "person": "Ross Geller",
             "object": "Engagement Ring",
             "media": "Friends",
@@ -244,7 +244,7 @@
             "random": "Munchy Box"
         },
         {
-            "id": "28",
+            "id": 28,
             "person": "Aragorn",
             "object": "Disco Ball",
             "media": "Lord of the Rings",
@@ -253,7 +253,7 @@
             "random": "Cheesy Pasta"
         },
         {
-            "id": "29",
+            "id": 29,
             "person": "Frodo Baggins",
             "object": "Overalls",
             "media": "Citizen Kane",
@@ -262,7 +262,7 @@
             "random": "Strongbow"
         },
         {
-            "id": "30",
+            "id": 30,
             "person": "George RR Martin",
             "object": "Checkered Flag",
             "media": "A Song of Ice and Fire",
@@ -271,7 +271,7 @@
             "random": "Magners"
         },
         {
-            "id": "31",
+            "id": 31,
             "person": "J RR Martin",
             "object": "Provisional Driving Licence",
             "media": "Father Ted",
@@ -280,7 +280,7 @@
             "random": "Celtic FC"
         },
         {
-            "id": "32",
+            "id": 32,
             "person": "Largo Winch",
             "object": "Dog Trap",
             "media": "Repo! The Genetic Opera",
@@ -289,7 +289,7 @@
             "random": "Passive High"
         },
         {
-            "id": "33",
+            "id": 33,
             "person": "Blair Fleming",
             "object": "Betting Slip",
             "media": "Liberty X",
@@ -298,7 +298,7 @@
             "random": "Confidence"
         },
         {
-            "id": "34",
+            "id": 34,
             "person": "Julia Roberts",
             "object": "Acoustic Guitar",
             "media": "Skyroads",
